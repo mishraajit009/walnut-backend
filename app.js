@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const apiRoutes = require('./routes/apiRoutes');
-
+const userRoutes = require('./routes/userRoutes');
 const app = express();
 app.set('trust proxy', 1);
 const port = 3000;
@@ -19,7 +19,8 @@ const limiter = rateLimit({
 app.use('/api', limiter);
 
 // Use routes defined in apiRoutes.js
-app.use('/api', apiRoutes);
+app.use('/admin', apiRoutes);
+app.use('/user',userRoutes)
 
 // Error handling middleware for rate limiting
 app.use((err, req, res, next) => {

@@ -1,13 +1,35 @@
 // db.js
-
 const mysql = require('mysql');
 
 const pool = mysql.createPool({
-  connectionLimit: 10,
-  host: 'localhost',
+  host: 'localhost:3000',
   user: 'root',
   password: 'my-secret-pw',
-  database: 'blinkit'
+  database: 'blinkit',
+  connectionLimit: 10, // adjust accordingly
 });
 
-module.exports = pool;
+// Function to execute SQL queries
+function query(sql, values) {
+  return new Promise((resolve, reject) => {
+    pool.getConnection((err, connection) => {
+      if (err) {
+        return reject(err);
+      }
+
+      connection.query(sql, values, (error, results) => {
+        connection.release();
+
+        if (error) {
+          return reject(error);
+        }
+
+        return resolve(results);
+      });
+    });
+  });
+}
+
+module.exports = {
+  query,
+};
