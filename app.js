@@ -4,6 +4,8 @@ const rateLimit = require('express-rate-limit');
 const apiRoutes = require('./routes/apiRoutes');
 const userRoutes = require('./routes/userRoutes');
 const app = express();
+const bodyParser = require('body-parser');
+const { getConnection } = require('./db');
 app.set('trust proxy', 1);
 const port = 3000;
 
@@ -16,16 +18,19 @@ const limiter = rateLimit({
   max: 100, // Limit each IP to 100 requests per windowMs
 });
 
+app.use(bodyParser.json());
 app.use('/api', limiter);
 
 // Use routes defined in apiRoutes.js
 app.use('/admin', apiRoutes);
 app.use('/user',userRoutes)
 
+const connection = getConnection();
 // Error handling middleware for rate limiting
 app.use((err, req, res, next) => {
-  if (err instanceof RateLimitError) {
-    res.status(429).json({ error: 'Too many requests, please try again later.' });
+  if (err) {
+    console.log("error",err);
+    res.json({err:err.message})
   } else {
     next(err);
   }

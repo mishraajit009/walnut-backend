@@ -1,6 +1,7 @@
 // user.js (example model)
 
 const db = require('../db');
+const { getConnection } = require('../db');
 
 function getAllAdmin(callback) {
   db.query('SELECT * FROM users', (err, results) => {
@@ -11,6 +12,17 @@ function getAllAdmin(callback) {
   });
 }
 
+async function listItems(){
+  const connection = await getConnection();
+  try {
+    const [rows] = await connection.execute('SELECT * FROM items');
+    return rows;
+  } finally {
+    connection.release();
+  }
+}
+
 module.exports = {
-  getAllAdmin
+  getAllAdmin,
+  listItems
 };
