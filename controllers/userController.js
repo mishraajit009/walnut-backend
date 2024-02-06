@@ -9,10 +9,21 @@ exports.listItem = async(req, res) => {
     res.send({ products: list_items });
 };
 
-exports.buyItems = (req, res) =>{
-    res.send({message:"Hellon in addItems"});
-}
-
+exports.bookItems = async (req, res) => {
+    try {
+      const { userId, items } = req.body;
+  
+      // Call the modal function to book items
+      const invoiceNumber = await usersModal.bookItems(userId, items);
+      if(typeof invoiceNumber !== "string"){
+        return res.json({ success: true,message: 'Failed to Book' ,error: invoiceNumber });
+      }
+      return res.json({ success: true, message: 'Items booked successfully', invoiceNumber });
+    } catch (error) {
+      console.error('Error booking items:', error);
+      res.status(500).json({ success: false, message: 'Internal Server Error', error: error.message });
+    }
+};
 exports.login = async (req,res)=>{
     console.log("my req body",req.body);
     const { username, password } = req.body;

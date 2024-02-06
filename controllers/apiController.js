@@ -15,7 +15,6 @@ exports.addItem = async (req, res) => {
         product.price = req.body.price
         product.qty = req.body.qty
         product.id = id
-        console.log("MY UUID",id);
         const added_Item = await adminModal.addItem(product);
         return res.send({ message:added_Item});
     }catch (error){
@@ -60,7 +59,8 @@ exports.deleteItem = async (req, res) => {
         res.status(500).json({ success: false, message: 'Internal Server Error', error: error.message });
     }
 };
-  
+
+
 
 
   

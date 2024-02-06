@@ -5,6 +5,6 @@ const router = express.Router();
 
 // Define API routes
 router.get('/list-items-user',authenticateTokenUser,userRoutes.listItem);
-router.post('/buy-items',authenticateTokenUser,userRoutes.buyItems);
+router.post('/book-items',authenticateTokenUser,userRoutes.bookItems);
 router.post('/login',userRoutes.login);
 module.exports = router;
