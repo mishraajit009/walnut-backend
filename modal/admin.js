@@ -48,8 +48,6 @@ async function deleteItem(id) {
 
 async function updateItem(id,data) {
   const connection = await getConnection();
-  console.log("Data",data);
-  console.log("ID",id);
   try {
     // Use the DELETE SQL statement to delete the item with the specified ID
     const [rows] = await connection.execute('UPDATE items SET name = ?, price = ?, qty = ? WHERE id = ?', [

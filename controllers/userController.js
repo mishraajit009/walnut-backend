@@ -20,17 +20,14 @@ exports.bookItems = async (req, res) => {
       }
       return res.json({ success: true, message: 'Items booked successfully', invoiceNumber });
     } catch (error) {
-      console.error('Error booking items:', error);
       res.status(500).json({ success: false, message: 'Internal Server Error', error: error.message });
     }
 };
 exports.login = async (req,res)=>{
-    console.log("my req body",req.body);
     const { username, password } = req.body;
 
     //const user = users.find((u) => u.username === username && u.password === password);
     const user_detail =await usersModal.login(username,password)
-    console.warn("User Details",user_detail);
     if (!user_detail) {
         return res.status(401).send('Invalid username or password.');
     }

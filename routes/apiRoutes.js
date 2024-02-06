@@ -6,7 +6,7 @@ const router = express.Router();
 // Define API routes
 router.post('/add-item',authenticateTokenAdmin,apiController.addItem);
 router.get('/list-items',authenticateTokenAdmin,apiController.listItem);
-router.put('/update-items',apiController.updateItem);
-router.delete('/delete-item',apiController.deleteItem);
+router.put('/update-items',authenticateTokenAdmin,apiController.updateItem);
+router.delete('/delete-item',authenticateTokenAdmin,apiController.deleteItem);
 
 module.exports = router;
