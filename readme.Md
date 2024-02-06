@@ -1,8 +1,7 @@
 Your Application Details:
 Application ID : 29402939
- If the Application ID is missing - you are not using the correct link. Please use the link in the email as is. 
+ If the Application ID is missing - you are not using the correct link. Please use the link in the email as is.
 Name : Ajit Mishra
- 
 Problem Statement:
 Design a Grocery Booking API:
 Roles:
@@ -11,11 +10,11 @@ Roles:
 Mandatory Requirements:
 Design API endpoints
 1. Admin Responsibilities:
-   - Add new grocery items to the system
+   - Add new grocery items to the system **-- DONE**
    - View existing grocery items **-- DONE**
-   - Remove grocery items from the system
-   - Update details (e.g., name, price) of existing grocery items
-   - Manage inventory levels of grocery items
+   - Remove grocery items from the system  **-- DONE**
+   - Update details (e.g., name, price) of existing grocery items **-- DONE**
+   - Manage inventory levels of grocery items **-- DONE**
 2. User Responsibilities:
    - View the list of available grocery items **--DONE**
    - Ability to book multiple grocery items in a single order

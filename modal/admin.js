@@ -12,6 +12,19 @@ function getAllAdmin(callback) {
   });
 }
 
+async function addItem(data){
+  const connection = await getConnection();
+  try {
+    const sqlData = [data.id,data.name, data.price, data.qty];
+    
+    // Construct the SQL query
+    const [rows] = await connection.execute('INSERT INTO items (id,name, price, qty) VALUES (?, ?, ?, ?)', sqlData)
+    return rows;
+  } finally {
+    connection.release();
+  }
+}
+
 async function listItems(){
   const connection = await getConnection();
   try {
@@ -22,7 +35,40 @@ async function listItems(){
   }
 }
 
+async function deleteItem(id) {
+  const connection = await getConnection();
+  try {
+    // Use the DELETE SQL statement to delete the item with the specified ID
+    const [rows] = await connection.execute('DELETE FROM items WHERE id = ?', [id]);
+    return rows;
+  } finally {
+    connection.release();
+  }
+}
+
+async function updateItem(id,data) {
+  const connection = await getConnection();
+  console.log("Data",data);
+  console.log("ID",id);
+  try {
+    // Use the DELETE SQL statement to delete the item with the specified ID
+    const [rows] = await connection.execute('UPDATE items SET name = ?, price = ?, qty = ? WHERE id = ?', [
+      data.name,
+      data.price,
+      data.qty,
+      id
+    ])
+    return rows;
+  } finally {
+    connection.release();
+  }
+}
+
+
 module.exports = {
   getAllAdmin,
-  listItems
+  addItem,
+  listItems,
+  deleteItem,
+  updateItem
 };

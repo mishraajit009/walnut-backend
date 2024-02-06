@@ -4,8 +4,7 @@ const {authenticateTokenUser,authenticateTokenAdmin} = require('../authenticate'
 const router = express.Router();
 
 // Define API routes
-router.get('/data', apiController.getData);
-router.post('/add-item',apiController.addItem);
+router.post('/add-item',authenticateTokenAdmin,apiController.addItem);
 router.get('/list-items',authenticateTokenAdmin,apiController.listItem);
 router.put('/update-items',apiController.updateItem);
 router.delete('/delete-item',apiController.deleteItem);
