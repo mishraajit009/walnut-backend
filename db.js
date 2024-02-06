@@ -15,7 +15,7 @@ const getConnection = async () => {
     const connection = await pool.getConnection();
     return connection;
   } catch (error) {
-    console.error('Error getting database connection:', error.message);
+    console.error('Error getting database connection:', error);
     throw error; // Rethrow the error for higher-level handling
   }
 };
