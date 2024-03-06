@@ -1,15 +1,48 @@
 const express = require('express');
+const app = express();
+const server = require('http').Server(app);
+const port = process.env.PORT || 3001;
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
-const apiRoutes = require('./routes/apiRoutes');
-const userRoutes = require('./routes/userRoutes');
-const app = express();
 const bodyParser = require('body-parser');
 const { getConnection } = require('./db');
-app.set('trust proxy', 1);
-const port = 3000;
+const apiRoutes = require('./routes/apiRoutes');
+const userRoutes = require('./routes/userRoutes');
+const { processPitchEmailWithGPTModel, parseToolCallReponseUsingFunctionName, generate_appointment_scheduling_structure } = require('./openaiFunction');
 
-// Enable CORS for all routes
+server.listen(port, () => {
+  console.log(`Server started on port ${port}`);
+});
+const io = require('socket.io')(server,{
+  cors: {
+    origin: '*',
+  }
+});
+
+io.on('connection', socket => {
+  console.log('User connected');
+
+  socket.on('chat message', async message => {
+    console.log("Message from users",message)
+
+    const initialPrompt = "Get Time";
+    const toolForGettingTime = generate_appointment_scheduling_structure()
+    const appointmentResponse = await processPitchEmailWithGPTModel(
+      initialPrompt,
+      text,
+      toolForGettingTime,
+      0.5,
+      0.5
+    )
+    io.emit('chat message', "I am sending users ->"+appointmentResponse);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected');
+  });
+});
+
+// From HERE connection for APP.
 app.use(cors());
 
 // Rate limiting middleware
@@ -37,6 +70,6 @@ app.use((err, req, res, next) => {
 });
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Server is running on http://localhost:${port}`);
+// });

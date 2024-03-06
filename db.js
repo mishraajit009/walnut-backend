@@ -4,7 +4,7 @@ const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
   password: 'my-secret-pw',
-  database: 'blinkit',
+  database: 'appointment_system',
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0

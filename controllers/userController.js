@@ -36,4 +36,9 @@ exports.login = async (req,res)=>{
    // res.json({ token });
     res.send({message:"Login Succesfull",token:token})
 }
+
+exports.schdeuleAppointment = async (req,res) => {
+  const data = req.body;
+  
+}
   
