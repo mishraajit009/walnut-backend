@@ -24,7 +24,6 @@ async function processPitchEmailWithGPTModel(
 
       console.log("GPT REQUEST", JSON.stringify(request));
 
-     const token ="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";
       const response = await callGPTApi(request, token);
       console.log(
         `function: processPitchEmailWithGPTModel:::
